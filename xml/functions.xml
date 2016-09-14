@@ -1,0 +1,233 @@
+<?xml version="1.0"?>
+<functions>
+	<function name = "forward">
+		<fdescription>
+			Runs the motor forward with the given amount of power.
+			Defined motors are LEFT (0), RIGHT (1), or HEAD(2).
+		</fdescription>
+		<parameters>
+			<param name = "motor" type = "int" min = "0" max = "2"
+				   pdescription = "the EV3 motor"/>
+			<param name = "power" type = "int" min = "0" max = "100"
+				   pdescription = "the power of the motor"/>
+		</parameters>
+		<code>
+			motors[motor].run_forever(duty_cycle_sp = power)
+		</code>
+	</function>
+	<function name = "reverse">
+		<fdescription>
+			Runs the motor backward with the given amount of power.
+			Defined motors are LEFT (0), RIGHT (1), or HEAD(2).
+		</fdescription>
+		<parameters>
+			<param name = "motor" type = "int" min = "0" max = "2"
+				   pdescription = "the EV3 motor"/>
+			<param name = "power" type = "int" min = "0" max = "100"
+				   pdescription = "the power of the motor"/>
+		</parameters>
+		<code>
+			motors[motor].run_forever(duty_cycle_sp = -power)
+		</code>
+	</function>
+	<function name = "forward_timed">
+		<fdescription>
+			Runs the motor forward with the given amount of power for
+			the given duration of time. Defined motors are LEFT (0),
+			RIGHT (1), or HEAD(2).
+		</fdescription>
+		<parameters>
+			<param name = "motor" type = "int" min = "0" max = "2"
+				   pdescription = "the EV3 motor"/>
+			<param name = "power" type = "int" min = "0" max = "100"
+				   pdescription = "the power of the motor"/>
+			<param name = "duration" type = "int" min = "0" max = "None"
+				   pdescription = "the duration in milliseconds"/>
+		</parameters>
+		<code>
+			motors[motor].run_timed(time_sp = duration, duty_cycle_sp = power)
+		</code>
+	</function>
+	<function name = "reverse_timed">
+		<fdescription>
+			Runs the motor backward with the given amount of power for
+			the given duration of time. Defined motors are LEFT (0),
+			RIGHT (1), or HEAD(2).
+		</fdescription>
+		<parameters>
+			<param name = "motor" type = "int" min = "0" max = "2"
+				   pdescription = "the EV3 motor"/>
+			<param name = "power" type = "int" min = "0" max = "100"
+				   pdescription = "the power of the motor"/>
+			<param name = "duration" type = "int" min = "0" max = "None"
+				   pdescription = "the duration in milliseconds"/>
+		</parameters>
+		<code>
+			motors[motor].run_timed(time_sp = duration, duty_cycle_sp = -power)
+		</code>
+	</function>
+	<function name = "turn_left">
+		<fdescription>
+			Rotates the robot counterclockwise with the given amount
+			of power for the given duration of time. Defined motors
+			are LEFT (0), RIGHT (1), or HEAD(2).
+		</fdescription>
+		<parameters>
+			<param name = "power" type = "int" min = "0" max = "100"
+				   pdescription = "the power of the motor"/>
+			<param name = "duration" type = "int" min = "0" max = "None"
+				   pdescription = "the duration in milliseconds"/>
+		</parameters>
+		<code>
+			motors[LEFT].run_timed(time_sp = duration, duty_cycle_sp = -power)
+			motors[RIGHT].run_timed(time_sp = duration, duty_cycle_sp = power)
+		</code>
+	</function>
+	<function name = "turn_right">
+		<fdescription>
+			Rotates the robot clockwise with the given amount of power
+			for the given duration of time. Defined motors are LEFT (0),
+			RIGHT (1), or HEAD(2).
+		</fdescription>
+		<parameters>
+			<param name = "power" type = "int" min = "0" max = "100"
+				   pdescription = "the power of the motor"/>
+			<param name = "duration" type = "int" min = "0" max = "None"
+				   pdescription = "the duration in milliseconds"/>
+		</parameters>
+		<code>
+			motors[LEFT].run_timed(time_sp = duration, duty_cycle_sp = power)
+			motors[RIGHT].run_timed(time_sp = duration, duty_cycle_sp = -power)
+		</code>
+	</function>
+	<function name = "wait">
+		<fdescription>
+			Do nothing for the given duration of time.
+		</fdescription>
+		<parameters>
+			<param name = "duration" type = "int" min = "0" max = "None"
+				   pdescription = "the duration in milliseconds"/>
+		</parameters>
+		<code>
+			time.sleep(float(duration) / 1000)
+		</code>
+	</function>
+	<function name = "stop">
+		<fdescription>
+			Stops the given motor. Defined motors are LEFT (0),
+			RIGHT (1), or HEAD(2).
+		</fdescription>
+		<parameters>
+			<param name = "motor" type = "int" min = "0" max = "2"
+				   pdescription = "the EV3 motor"/>
+		</parameters>
+		<code>
+			motors[motor].stop()
+		</code>
+	</function>
+	<function name = "clear_screen">
+		<fdescription>
+			Clears the robot's LCD display.
+		</fdescription>
+		<parameters>
+		</parameters>
+		<code>
+			os.system("clear")
+		</code>
+	</function>
+	<function name = "get_distance">
+		<fdescription>
+			Returns the distance in cm of the robot from an obstacle.
+		</fdescription>
+		<parameters>
+		</parameters>
+		<code>
+			distance_in_percent = sensors[INFRARED].value()
+			return float(distance_in_percent) / 100 * SENSOR_INFRARED_MAX_RANGE_IN_CM
+		</code>
+	</function>
+	<function name = "get_colour">
+		<fdescription>
+			Returns the colour detected by the robot's colour sensor.
+		</fdescription>
+		<parameters>
+		</parameters>
+		<code>
+			return colours_indexed[sensors[COLOUR].value()]
+		</code>
+	</function>
+	<function name = "set_led_colour">
+		<fdescription>
+			Sets the given LED light to the given colour. Defined leds
+			are LEFT (0) and RIGHT (1). Defined colours are AMBER (0),
+			GREEN (1), ORANGE (2), RED (3), and YELLOW (4).
+		</fdescription>
+		<parameters>
+			<param name = "led" type = "int" min = "0" max = "1"
+				   pdescription = "the led light on the robot"/>
+			<param name = "colour" type = "int" min = "0" max = "4"
+				   pdescription = "the colour of the light"/>
+		</parameters>
+		<code>
+			Leds.set_color(leds_indexed[led], led_colours_indexed[colour])
+		</code>
+	</function>
+	<function name = "get_sensor_reading">
+		<fdescription>
+			Gets a sensor reading from one of the four EV3 Sensors.
+			Defined sensors are T_LEFT (0), T_RIGHT (1), COLOUR (2),
+			and INFRARED (3). The value returned depends on the type
+			of sensor:
+			-	touch sensors return True or False
+			-	the colour sensor returns the colour detected as a
+				string
+			-	the infrared sensor returns the distance in
+				centimetres, of the nearest object in front of the
+				robot, or the maximum range of the sensor (50cm)
+				if nothing is detected.
+		</fdescription>
+		<parameters>
+			<param name = "sensor" type = "int" min = "0" max = "3"
+				   pdescription = "the EV3 sensor"/>
+		</parameters>
+		<code>
+			if (sensor == T_LEFT) or (sensor == T_RIGHT):
+				return sensors[sensor].value() == 1
+			if sensor == COLOUR:
+				return colours_indexed[sensors[sensor].value()]
+			else:
+				return sensors[sensor].value()
+		</code>
+	</function>
+	<function name = "speak">
+		<fdescription>
+			Instructs the robot to speak the given text aloud.
+		</fdescription>
+		<parameters>
+			<param name = "words" type = "basestring" min = "None" max = "None"
+				   pdescription = "the words to be spoken"/>
+		</parameters>
+		<code>
+			if VERBOSE and ENABLE_SPEECH:
+				sound.speak(words)
+		</code>
+	</function>
+	<function name = "play_note">
+		<fdescription>
+			Instructs the robot to play the given note, for the
+			given duration of time. Defined notes are C_4 (0),
+			D_4 (1), E_4 (2), F_4 (3), G_4 (4), A_4 (5), B_4 (6),
+			C_5 (7).
+		</fdescription>
+		<parameters>
+			<param name = "note" type = "int" min = "0" max = "7"
+				   pdescription = "the note to play"/>
+			<param name = "duration" type = "int" min = "0" max = "None"
+				   pdescription = "the duration in milliseconds"/>
+		</parameters>
+		<code>
+			if verbose:
+				sound.tone(frequencies_indexed[note], duration)
+		</code>
+	</function>
+</functions>
